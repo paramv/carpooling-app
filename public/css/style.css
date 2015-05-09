@@ -69,6 +69,21 @@ a.sign-up:hover {
   text-decoration: none;
   color: #1208c0;
 }
+@media (max-width: 768px) {
+  .container .header {
+    width: 100%;
+  }
+  .container .header h1.title p {
+    text-align: center;
+    float: none;
+  }
+  .container .header h1.title span {
+    clear: both;
+    display: block;
+    padding-top: 10px;
+    text-align: center;
+  }
+}
 body {
   background: #eeeeee;
   font: 14px "Segoe UI", Helvetica, Arial, sans-serif;
@@ -80,11 +95,15 @@ a {
   width: 100%;
 }
 .container .header h1.title {
-  float: left;
   font-size: 72px;
   color: #2bde73;
   font-style: italic;
 }
 .container .header p {
   float: left;
+}
+.container .header span {
+  font-size: 16px;
+  padding-left: 20px;
+  color: #1db95c;
 }

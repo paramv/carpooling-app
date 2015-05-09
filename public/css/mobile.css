@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+  .container .header {
+    width: 100%;
+  }
+  .container .header h1.title p {
+    text-align: center;
+    float: none;
+  }
+  .container .header h1.title span {
+    clear: both;
+    display: block;
+    padding-top: 10px;
+    text-align: center;
+  }
+}
