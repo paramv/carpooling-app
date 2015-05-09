@@ -2,11 +2,13 @@ define([
     'bb',
     'app/state',
     'app/login/login',
-    'app/signup/signup'
-], function(bb, State, Login, Signup) {
+    'app/signup/signup',
+    'app/dash/dash'
+], function(bb, State, Login, Signup, Dash) {
     var signUp;
     var login;
     var router;
+    var dashView;
     var state = State.getInstance();
     var hideOthers = function() {
         $('body .container .content').children().each(function(i, el) {
@@ -27,11 +29,11 @@ define([
             // if (state.get('user')) {
             //     return this.navigate('dash');
             // }
+            hideOthers();
             if (!login) {
                 login = new Login();
                 login.$el.appendTo($('body .container .content'));
             }
-            hideOthers();
             login.$el.removeClass('hidden').addClass('visible-block');
         },
 
@@ -39,18 +41,30 @@ define([
             // if (state.get('user')) {
             //     return this.navigate('dash');
             // }
+            hideOthers();
             if (!signUp) {
                 signUp = new Signup();
                 signUp.$el.appendTo('body .container .content');
                 signUp.$el.addClass('form-signup');
             }
-            hideOthers();
+
             signUp.$el.removeClass('hidden').addClass('visible-block');
 
         },
 
         onDash: function() {
+            if (!state.get('user')) {
+                return this.navigate('login', {
+                    trigger: true
+                });
+            }
             hideOthers();
+            if (!dashView) {
+                dashView = new Dash();
+                dashView.$el.appendTo($('body .container .content'));
+            }
+            
+            dashView.$el.removeClass('hidden').addClass('visible-block');
         },
 
         search: function(query, page) {

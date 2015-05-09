@@ -38,15 +38,10 @@ require([
 ], function($, bb, HB, State, Login, Router) {
     var login;
     var router;
-    HB.get().registerHelper("debug", function(optionalValue) {
-        console.log("Current Context");
-        console.log("====================");
+    HB.get().registerHelper('debug',function(val){
         console.log(this);
-
-        if (optionalValue) {
-            console.log("Value");
-            console.log("====================");
-            console.log(optionalValue);
+        if(val){
+            console.log(val)
         }
     });
     var state = State.getInstance();
@@ -55,13 +50,18 @@ require([
     });
     $.get('/auth').done(function(resp) {
         router = Router.getInstance();
-        bb.history.start();
+        
         if (resp._userLoggedIn) {
+            
             state.set('user', resp.user);
+            bb.history.start();
             router.navigate('dash', {
                 trigger: true
             });
-        } else if (bb.history.getFragment() !== 'signup') {
+            return;
+        }
+        bb.history.start(); 
+        if (bb.history.getFragment() !== 'signup') {
             bb.history.navigate('login');
         }
 

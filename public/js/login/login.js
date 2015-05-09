@@ -19,8 +19,10 @@ define([
 			var self = this;
 			e.preventDefault();
 			this.model.authenticate().done(function(resp) {
+
 				state.set('user',resp.user);
 				self.clearStatus();
+				window.location.hash='dash';
 			}).fail(function(resp) {
 				try {
 					var res = JSON.parse(resp.responseText);

@@ -6,15 +6,16 @@ define([
 	'app/models/user',
 	'app/mapview',
 	'app/locations',
+	'app/state',
 	'hbs!./signup'
-], function($, _, bb, Form, User, MapView, locations, tpl) {
+], function($, _, bb, Form, User, MapView, locations, State, tpl) {
 	var Login = Form.extend({
 		template: tpl,
 		model: new User(),
 		render: function() {
 			var $markup;
 			$markup = $(this._template({
-				locations:locations
+				locations: locations
 			})).html();
 			this.$el.html($markup);
 			this.$el.addClass('form');
@@ -61,32 +62,31 @@ define([
 				return false;
 			}
 			this.model.unset('password_alt');
-			if (this.model.get('starttime')) {
-				workTimings.start = this.model.get('starttime');
-				this.model.unset('starttime');
-			}
-			if (this.model.get('endtime')) {
-				workTimings.end = this.model.get('endtime');
-				this.model.unset('endtime');
-			}
+			
+			workTimings.start = this.model.get('starttime') || "09:00";
+			this.model.unset('starttime');
+			workTimings.end = this.model.get('endtime') || "18:00";
+			this.model.unset('endtime');
 			this.model.set('workTimings', workTimings);
 			var addr = this.model.get('address');
-			if(typeof addr === 'string'){
-				this.model.set('address',addr.split(','));
+			if (typeof addr === 'string') {
+				this.model.set('address', addr.split(','));
 			}
 			var worklocation = this.$el.find('select[name=worklocation]').val();
 			var workLocationName = worklocation.split(':')[0];
 			var workLocationLatLng = worklocation.split(':')[1];
-			this.model.set('worklocation',{
-				name:workLocationName,
-				address:workLocationLatLng.split(',')
+			this.model.set('worklocation', {
+				name: workLocationName,
+				address: workLocationLatLng.split(',')
 			});
+			this.model.set('vehicle',$('[name=vehicle]').val() === 'yes' ? true : false);
 			// this.$el.find('.pick-location').text('Pick Location');
 			// this.$el.find('.location-picker').removeClass('open').height(0);
 			this.clearErrors();
 			this.model.save(null, {
 				validate: false
-			}).done(function() {
+			}).done(function(resp) {
+				State.getInstance().set('user',resp.user);
 				window.location.hash = 'dash';
 			}).fail(function() {
 

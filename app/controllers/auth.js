@@ -18,6 +18,7 @@ router.get('/', function(req, res, next) {
                     _userLoggedIn: false
                 });
             } else {
+                user.password = '';
                 res.json({
                     _userLoggedIn: true,
                     user: user
@@ -44,6 +45,7 @@ router.post('/login', function(req, res, next) {
         } else {
             req.session.userLoggedIn = true;
             req.session.userId = user._id;
+            user.password = '';
             res.json({
                 message: 'auth-success',
                 user: user

@@ -15,20 +15,21 @@ router.post('/', function(req, res, next) {
     var user = new User();
     keys.forEach(function(key) {
         if(key === 'password'){
-            user.setPassword(keys[key]);
+            user.setPassword(body[key]);
             return true;
         }
         user[key] = body[key];
     });
-    console.log(user);
+
     user.save(function(err, user) {
         if (err) {
             return next(err);
         } else if(user._id){
             req.session.userLoggedIn = true;
             req.session.userId = user._id;
+            user.password = '';
             res.json({
-                _userId: user._id
+                user: user
             });
         }
     });

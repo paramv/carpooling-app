@@ -2,7 +2,15 @@
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
+
+
+
+var ConnectionSchema = new Schema({
+	userId: String,
+
+});
+
 var Preferences = new Schema({
 	visibleFields: Array
 });
@@ -22,34 +30,45 @@ var UserSchema = new Schema({
 		index: '2d' // create the geospatial index
 	},
 	office: String,
-	worklocation:{
+	worklocation: {
 		name: String,
 		address: {
-			type:[Number],
-			index:'2d'
+			type: [Number],
+			index: '2d'
 		}
 	},
 	mobilenumber: String,
 	workTimings: {
-		start: String,
-		end: String
+		start: {
+			type: String,
+			default: "09:00"
+		},
+		end: {
+			type: String,
+			default: "18:00"
+		}
 	},
 	vehicle: {
 		type: Boolean,
 		default: false
 	},
-	_isNumberVerified:{
+	_isNumberVerified: {
 		type: Boolean,
-		default:false
-	}
+		default: false
+	},
+	connections: [ConnectionSchema]
 });
 
-UserSchema.methods.setPassword = function(pwd){
-	this.password = bcrypt.hashSync(pwd);
+UserSchema.methods.setPassword = function(pwd) {
+	console.log(pwd);
+	var salt = bcrypt.genSaltSync(10);
+	var hash = bcrypt.hashSync(pwd, salt);
+	this.password = bcrypt.hashSync(pwd, salt);
 };
 
 UserSchema.methods.validPassword = function(pwd) {
-	return bcrypt.compareSync(pwd, this.password); 
+	console.log(this.password)
+	return bcrypt.compareSync(pwd, this.password);
 };
 
 

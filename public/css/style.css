@@ -37,6 +37,11 @@
     text-align: center;
   }
 }
+@media (min-width: 1200px) {
+  .container {
+    width: 90%;
+  }
+}
 body {
   background: #eeeeee;
   font: 14px "Segoe UI", Helvetica, Arial, sans-serif;
@@ -121,4 +126,9 @@ a {
   margin-top: 20px;
   width: 100%;
   height: 500px;
+}
+.container div.dash-view .map-canvas-wrapper {
+  width: 100%;
+  height: 400px;
+  margin: 10px 0;
 }
