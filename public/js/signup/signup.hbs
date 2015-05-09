@@ -24,8 +24,11 @@
 	  </div>
 	  <div class="form-group">
 	    <label>Work Location</label>
-	    <select name="" class="form-control" name="worklocation" data-bind="worklocation" required="">
-	    	<option value="test">Test</option>
+	    <select name="worklocation" class="form-control" name="worklocation" data-bind="worklocation" required="">
+	    	{{#each locations}}
+	    		<option value="{{this.name}}:{{this.location}}">{{this.name}}</option>
+	    	{{/each}}
+	    	
 	    </select>
 	  </div>
 	  <div class="form-group">

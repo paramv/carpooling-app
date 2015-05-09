@@ -5,14 +5,17 @@ define([
 	'app/base/form',
 	'app/models/user',
 	'app/mapview',
+	'app/locations',
 	'hbs!./signup'
-], function($, _, bb, Form, User, MapView, tpl) {
+], function($, _, bb, Form, User, MapView, locations, tpl) {
 	var Login = Form.extend({
 		template: tpl,
 		model: new User(),
 		render: function() {
 			var $markup;
-			$markup = $(this._template()).html();
+			$markup = $(this._template({
+				locations:locations
+			})).html();
 			this.$el.html($markup);
 			this.$el.addClass('form');
 			this.mapView = new MapView({
@@ -71,6 +74,13 @@ define([
 			if(typeof addr === 'string'){
 				this.model.set('address',addr.split(','));
 			}
+			var worklocation = this.$el.find('select[name=worklocation]').val();
+			var workLocationName = worklocation.split(':')[0];
+			var workLocationLatLng = worklocation.split(':')[1];
+			this.model.set('worklocation',{
+				name:workLocationName,
+				address:workLocationLatLng.split(',')
+			});
 			// this.$el.find('.pick-location').text('Pick Location');
 			// this.$el.find('.location-picker').removeClass('open').height(0);
 			this.clearErrors();

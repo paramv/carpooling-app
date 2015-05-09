@@ -30,13 +30,25 @@ requirejs.config({
 require([
     'jquery',
     'bb',
-    'app/base/class',
+    'hbs',
     'app/state',
     'app/login/login',
-    'app/router'
-], function($, bb, Class, State, Login, Router) {
+    'app/router',
+    'hbs'
+], function($, bb, HB, State, Login, Router) {
     var login;
     var router;
+    HB.get().registerHelper("debug", function(optionalValue) {
+        console.log("Current Context");
+        console.log("====================");
+        console.log(this);
+
+        if (optionalValue) {
+            console.log("Value");
+            console.log("====================");
+            console.log(optionalValue);
+        }
+    });
     var state = State.getInstance();
     $.ajaxSetup({
         cache: false
@@ -45,16 +57,18 @@ require([
         router = Router.getInstance();
         bb.history.start();
         if (resp._userLoggedIn) {
-            state.set('user',resp.user);
-            router.navigate('dash',{trigger:true});
-        } else if(bb.history.getFragment() !== 'signup'){
+            state.set('user', resp.user);
+            router.navigate('dash', {
+                trigger: true
+            });
+        } else if (bb.history.getFragment() !== 'signup') {
             bb.history.navigate('login');
         }
-        
+
     }).fail(function() {
 
     });
-    
-    
+
+
 
 });

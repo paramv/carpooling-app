@@ -9,7 +9,9 @@ define([
     var router;
     var state = State.getInstance();
     var hideOthers = function() {
-        $('body .container .content').children().addClass('hidden');
+        $('body .container .content').children().each(function(i, el) {
+            $(el).addClass('hidden').removeClass('visible-block');
+        });
     }
     var Router = Backbone.Router.extend({
 
@@ -22,26 +24,27 @@ define([
         },
 
         onLogin: function() {
-            if (state.get('user')) {
-                return this.navigate('dash');
-            }
-            if (!signUp) {
+            // if (state.get('user')) {
+            //     return this.navigate('dash');
+            // }
+            if (!login) {
                 login = new Login();
-                login.$el.appendTo($('body .container'));
+                login.$el.appendTo($('body .container .content'));
             }
             hideOthers();
-            login.$el.addClass('visible-block');
+            login.$el.removeClass('hidden').addClass('visible-block');
         },
 
         onSignup: function() {
-            if (state.get('user')) {
-                return this.navigate('dash');
-            }
+            // if (state.get('user')) {
+            //     return this.navigate('dash');
+            // }
             if (!signUp) {
                 signUp = new Signup();
                 signUp.$el.appendTo('body .container .content');
                 signUp.$el.addClass('form-signup');
             }
+            hideOthers();
             signUp.$el.removeClass('hidden').addClass('visible-block');
 
         },

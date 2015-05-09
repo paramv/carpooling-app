@@ -29,7 +29,7 @@ define([
 				throw new Error('A valid handlebars template is required');
 				return;
 			}
-			return (typeof tpl === 'string') ? tpl : tpl.apply(this);
+			return (typeof tpl === 'string') ? tpl : tpl.apply(this,arguments);
 		}
 	});
 

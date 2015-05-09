@@ -22,6 +22,13 @@ var UserSchema = new Schema({
 		index: '2d' // create the geospatial index
 	},
 	office: String,
+	worklocation:{
+		name: String,
+		address: {
+			type:[Number],
+			index:'2d'
+		}
+	},
 	mobilenumber: String,
 	workTimings: {
 		start: String,
