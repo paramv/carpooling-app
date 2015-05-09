@@ -5,9 +5,8 @@ define([
 	'app/base/form',
 	'app/models/user',
 	'app/mapview',
-	'app/router',
 	'hbs!./signup'
-], function($, _, bb, Form, User, MapView, Router, tpl) {
+], function($, _, bb, Form, User, MapView, tpl) {
 	var Login = Form.extend({
 		template: tpl,
 		model: new User(),
@@ -68,13 +67,17 @@ define([
 				this.model.unset('endtime');
 			}
 			this.model.set('workTimings', workTimings);
+			var addr = this.model.get('address');
+			if(typeof addr === 'string'){
+				this.model.set('address',addr.split(','));
+			}
 			// this.$el.find('.pick-location').text('Pick Location');
 			// this.$el.find('.location-picker').removeClass('open').height(0);
 			this.clearErrors();
 			this.model.save(null, {
 				validate: false
 			}).done(function() {
-				var router = Router.getInstance();
+				window.location.hash = 'dash';
 			}).fail(function() {
 
 			});

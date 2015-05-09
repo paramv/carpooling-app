@@ -42,16 +42,19 @@ require([
         cache: false
     });
     $.get('/auth').done(function(resp) {
+        router = Router.getInstance();
+        bb.history.start();
         if (resp._userLoggedIn) {
             state.set('user',resp.user);
+            router.navigate('dash',{trigger:true});
         } else if(bb.history.getFragment() !== 'signup'){
-            login = new Login();
-            login.$el.appendTo($('body .container'));
+            bb.history.navigate('login');
         }
+        
     }).fail(function() {
 
     });
-    router = Router.getInstance();
-    bb.history.start();
+    
+    
 
 });

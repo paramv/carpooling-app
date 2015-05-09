@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
-
+var bcrypt = require('bcrypt-nodejs');
 var Preferences = new Schema({
 	visibleFields: Array
 });
@@ -37,9 +37,13 @@ var UserSchema = new Schema({
 	}
 });
 
+UserSchema.methods.setPassword = function(pwd){
+	this.password = bcrypt.hashSync(pwd);
+};
+
 UserSchema.methods.validPassword = function(pwd) {
-	return this.password === pwd;
-}
+	return bcrypt.compareSync(pwd, this.password); 
+};
 
 
 mongoose.model('User', UserSchema);

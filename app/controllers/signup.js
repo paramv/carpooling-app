@@ -11,10 +11,16 @@ module.exports = function(app) {
 router.post('/', function(req, res, next) {
     var body = req.body;
     var keys = Object.keys(body);
+    console.log(keys,body);
     var user = new User();
-    keys.forEach(function(value, key) {
-        user[key] = value;
+    keys.forEach(function(key) {
+        if(key === 'password'){
+            user.setPassword(keys[key]);
+            return true;
+        }
+        user[key] = body[key];
     });
+    console.log(user);
     user.save(function(err, user) {
         if (err) {
             return next(err);
@@ -26,5 +32,4 @@ router.post('/', function(req, res, next) {
             });
         }
     });
-    res.send('ok');
 });
