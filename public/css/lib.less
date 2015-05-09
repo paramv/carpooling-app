@@ -1,0 +1,23 @@
+/*color palette definition*/
+@green:#1db95c;
+@gray1:#eeeeee;
+@primary-green:#2bde73;
+@black:#000;
+@blue:#104CA9;
+@dark-blue:#1208C0;
+
+@import "func.less";
+.btn-primary {
+	background: @primary-green;
+	border:none;
+	.transition(background,0.3s);
+}
+
+.btn-primary.active, .btn-primary:active {
+	background: @green;
+}
+
+.btn-primary:focus, .btn-primary:hover {
+	background: @green;
+}
+
