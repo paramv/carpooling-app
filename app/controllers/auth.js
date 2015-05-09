@@ -33,6 +33,12 @@ router.get('/', function(req, res, next) {
 
 });
 
+router.get('/logout', function(req, res, next) {
+    req.session.userLoggedIn = false;
+    req.session.userId = null;
+    res.send('ok')
+});
+
 router.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) {

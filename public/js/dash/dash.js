@@ -35,9 +35,9 @@ define([
 			});
 			this.mapView.user = user;
 			this._bindEvents();
-			this.mapView.initMaps().done(function() {
-				self.search();
-			});
+			// this.mapView.initMaps().done(function() {
+			// 	self.search();
+			// });
 		},
 
 		_bindEvents: function() {
@@ -61,6 +61,7 @@ define([
 		events: {
 			// 'afterrender'
 			'click .search-btn ': 'search',
+			'click .logout': 'logout'
 
 		},
 
@@ -81,10 +82,16 @@ define([
 			var filter = this.filterModel.toJSON();
 			// t = this.mapView.directionResult;
 			$.ajax({
-				type:'POST',
+				type: 'POST',
 				dataType: "json",
 				url: '/search',
 				data: filter
+			});
+		},
+
+		logout: function() {
+			$.get('/auth/logout').done(function() {
+				window.location.hash = 'login';
 			});
 		}
 
