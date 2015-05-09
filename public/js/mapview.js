@@ -19,6 +19,7 @@ define([
 	// };
 	var MapView = bb.View.extend({
 		template: '<div class="map-canvas"></div>',
+		showSearch: true,
 		defaults: {
 			mapOpts: {
 				center: {
@@ -41,7 +42,7 @@ define([
 			if (force || !this._mapInitialized) {
 				this.maps = new google.maps.Map(this.el, this.mapOpts);
 				this.marker = new google.maps.Marker({
-					position: new google.maps.LatLng(this.mapOpts.location),
+					position: new google.maps.LatLng([this.mapOpts.center.lat, this.mapOpts.center.lng]),
 					map: this.maps
 				});
 				this._bindMapEvents();
@@ -58,6 +59,33 @@ define([
 				marker.setPosition(event.latLng);
 				self.$el.trigger('locationselected', [event.latLng]);
 			});
+		},
+
+		showSearchPane: function() {
+			var $el = this.$el;
+			var self = this;
+			var $search = $('<input>')
+				.attr('name', 'map-search')
+				.addClass('mapsearch form-control')
+				.attr('placeholder', 'Type in a location');
+			$search.on('change', function(e) {
+				var map = self.maps;
+				var location = $search.val();
+				var geocoder = new google.maps.Geocoder();
+				var marker = self.marker;
+				geocoder.geocode({
+					'address': location
+				}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						map.setCenter(results[0].geometry.location);
+						marker.setPosition(results[0].geometry.location);
+						self.$el.trigger('locationselected', [results[0].geometry.location]);
+					} else {
+						alert('Geocode was not successful for the following reason: ' + status);
+					}
+				});
+			});
+			$el.append($search);
 		}
 	});
 

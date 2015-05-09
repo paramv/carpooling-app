@@ -127,6 +127,22 @@ a {
   width: 100%;
   height: 500px;
 }
+.container .form.form-signup div.location-picker .mapsearch {
+  position: absolute;
+  z-index: 1;
+  width: 65%;
+  left: 70px;
+  top: -35px;
+  -webkit-transition: top 0.4s ease;
+  -moz-transition: top 0.4s ease;
+  -ms-transition: top 0.4s ease;
+  -o-transition: top 0.4s ease;
+  transition: top 0.4s ease;
+}
+.container .form.form-signup div.location-picker .mapsearch:hover,
+.container .form.form-signup div.location-picker .mapsearch:focus {
+  top: 0;
+}
 .container div.dash-view .logout {
   float: right;
 }
@@ -134,4 +150,11 @@ a {
   width: 100%;
   height: 400px;
   margin: 10px 0;
+}
+.container div.dash-view .search .results div.user.result {
+  height: 100px;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: content-box;
+  border: 1px solid #B0B0B0;
 }

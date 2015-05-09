@@ -23,6 +23,7 @@ define([
 				el: this.$el.find('.location-picker').get(0)
 			});
 			this.mapView.initMaps();
+			this.mapView.showSearchPane();
 		},
 		events: {
 			// 'afterrender'

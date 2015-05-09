@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
                 return res.json({
                     _userLoggedIn: false
                 });
-            } else {
+            } else if(user){
                 user.password = '';
                 res.json({
                     _userLoggedIn: true,

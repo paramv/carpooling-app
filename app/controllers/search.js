@@ -47,7 +47,7 @@ router.post('/', function(req, res, next) {
                         }
                     }
                 })
-                .select('name email workTimings')
+                .select('_id name email workTimings')
                 .exec(function(err, users) {
                     if (err) {
                         return next(err);

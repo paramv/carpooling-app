@@ -38,11 +38,18 @@ require([
 ], function($, bb, HB, State, Login, Router) {
     var login;
     var router;
-    HB.get().registerHelper('debug',function(val){
+    HB.get().registerHelper('debug', function(val) {
         console.log(this);
-        if(val){
+        if (val) {
             console.log(val)
         }
+    });
+
+    HB.get().registerHelper('ifUsersAreDifferent', function(value) {
+        if (this._id !== value.data._parent.root.user._id) {
+            return value.fn(this);
+        }
+        return value.inverse(this);
     });
     var state = State.getInstance();
     $.ajaxSetup({
@@ -50,9 +57,9 @@ require([
     });
     $.get('/auth').done(function(resp) {
         router = Router.getInstance();
-        
+
         if (resp._userLoggedIn) {
-            
+
             state.set('user', resp.user);
             bb.history.start();
             router.navigate('dash', {
@@ -60,7 +67,7 @@ require([
             });
             return;
         }
-        bb.history.start(); 
+        bb.history.start();
         if (bb.history.getFragment() !== 'signup') {
             bb.history.navigate('login');
         }

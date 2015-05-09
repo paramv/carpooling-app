@@ -11,7 +11,7 @@ define([
 					lat: 13.0475604,
 					lng: 80.2089535,
 				},
-				zoom: 15
+				zoom: 14
 			}
 		},
 
@@ -30,14 +30,16 @@ define([
 					lng: user.address[1]
 				};
 				this.maps = new google.maps.Map(this.el, this.mapOpts);
-				this.destinationMarker = new google.maps.Marker({
+				/*this.destinationMarker = new google.maps.Marker({
 					position: new google.maps.LatLng(destination.lat, destination.lng),
-					map: this.maps
+					map: this.maps,
+					title:'Destination'
 				});
 				this.originMarker = new google.maps.Marker({
 					position: new google.maps.LatLng(origin.lat, origin.lng),
-					map: this.maps
-				});
+					map: this.maps,
+					title:'Origin'
+				});*/
 				// if(user.vehicle){
 				this.calcRoute(origin, destination);
 				// }
@@ -60,22 +62,13 @@ define([
 			var self = this;
 			this.directionsDisplay.setMap(this.maps);
 			directionsService.route(request, function(response, status) {
+				var center;
 				if (status == google.maps.DirectionsStatus.OK) {
 					self.directionResult = response.routes[0];
 					disp.setDirections(response);
+					center = response.routes[0].bounds.getCenter()
+					self.maps.setCenter(center);
 					self.rendered.resolve();
-					/*var rectangle = new google.maps.Rectangle({
-						strokeColor: '#FF0000',
-						strokeOpacity: 0.8,
-						strokeWeight: 2,
-						fillColor: '#FF0000',
-						fillOpacity: 0.35,
-						map: self.maps,
-						bounds: new google.maps.LatLngBounds(
-							self.directionResult.bounds.getSouthWest(),
-							self.directionResult.bounds.getNorthEast()
-							)
-					});*/
 				}
 			});
 		},
@@ -84,14 +77,24 @@ define([
 			var maps = this.maps;
 			var marker = this.marker;
 			var self = this;
-			google.maps.event.addListener(maps, 'click', function(event) {
-				marker.setPosition(event.latLng);
-			});
+			// google.maps.event.addListener(maps, 'click', function(event) {
+			// 	marker.setPosition(event.latLng);
+			// });
 
-			google.maps.event.addListener(this.originMarker, 'click', function(e) {
-				if (self.directionResult) {
+			
+		},
 
-				}
+		plotUsers: function(users) {
+			var self = this;
+			this.markers = [];
+			$.each(users, function(idx,user) {
+				if(user._id === self.user._id) return true;
+				var marker = new google.maps.Marker({
+					position: new google.maps.LatLng(user.address[0], user.address[1]),
+					map: self.maps,
+					title: user.name
+				});
+				self.markers.push(marker);
 			});
 		}
 	});

@@ -35,9 +35,9 @@ define([
 			});
 			this.mapView.user = user;
 			this._bindEvents();
-			// this.mapView.initMaps().done(function() {
-			// 	self.search();
-			// });
+			this.mapView.initMaps().done(function() {
+				self.search();
+			});
 		},
 
 		_bindEvents: function() {
@@ -71,6 +71,9 @@ define([
 			var legs = this.mapView.directionResult.legs[0];
 			var filterModel = this.filterModel;
 			var user = State.getInstance().get('user');
+			var self = this;
+
+
 			filterModel.set('isPassenger', !user.vehicle);
 			filterModel.set('userId', user._id);
 
@@ -86,6 +89,9 @@ define([
 				dataType: "json",
 				url: '/search',
 				data: filter
+			}).done(function(resp){
+				self.mapView.plotUsers(resp);
+				self.$el.find('.results-wrapper').html(resultsTpl({users:resp,user:user}));
 			});
 		},
 
