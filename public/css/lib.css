@@ -1,4 +1,10 @@
 /*color palette definition*/
+.hidden {
+  display: none;
+}
+.visible-block {
+  display: block;
+}
 .btn-primary {
   background: #2bde73;
   border: none;

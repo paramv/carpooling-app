@@ -11,6 +11,9 @@ define([
 		autoRender: false,
 
 		initialize: function() {
+			if (this.model) {
+				this.listenTo(this.model, "change", this.render);
+			}
 			this.render();
 		},
 
@@ -27,13 +30,6 @@ define([
 				return;
 			}
 			return (typeof tpl === 'string') ? tpl : tpl.apply(this);
-		},
-		set: function(key, value) {
-
-		},
-
-		get: function(key) {
-
 		}
 	});
 

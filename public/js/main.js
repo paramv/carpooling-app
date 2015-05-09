@@ -9,7 +9,7 @@ requirejs.config({
     paths: {
         app: 'js',
         jquery: '/components/jquery/dist/jquery.min',
-        underscore:'/components/underscore/underscore-min',
+        underscore: '/components/underscore/underscore-min',
         bootstrap: '/components/bootstrap/dist/js/bootstrap.min',
         bb: '/components/backbone/backbone',
         hbs: '/components/require-handlebars-plugin/hbs'
@@ -29,10 +29,29 @@ requirejs.config({
 
 require([
     'jquery',
+    'bb',
     'app/base/class',
     'app/state',
     'app/login/login',
-], function($, Class,State,Login) {
-    var $login = new Login().$el;
-    $('.container').append($login);
+    'app/router'
+], function($, bb, Class, State, Login, Router) {
+    var login;
+    var router;
+    var state = State.getInstance();
+    $.ajaxSetup({
+        cache: false
+    });
+    $.get('/auth').done(function(resp) {
+        if (resp._userLoggedIn) {
+            state.set('user',resp.user);
+        } else if(bb.history.getFragment() !== 'signup'){
+            login = new Login();
+            login.$el.appendTo($('body .container'));
+        }
+    }).fail(function() {
+
+    });
+    router = Router.getInstance();
+    bb.history.start();
+
 });

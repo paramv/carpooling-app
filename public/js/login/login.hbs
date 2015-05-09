@@ -1,13 +1,14 @@
-<div class="wrapper">
+<div>
 	<form action="" method="post" name="Login_Form" class="form-signin">       
-	    <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
-		  <hr class="colorgraph"><br>
-		  
-		  <input type="text" class="form-control" name="Username" placeholder="Username/Email" required="" autofocus="" />
-		  <input type="password" class="form-control" name="Password" placeholder="Password" required=""/>     		  
-		 
-		  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Login</button> 
+	  <h3 class="form-heading">Welcome Back! Please Sign In</h3>
+	  <label class="status-text"></label>
+	  <hr class="colorgraph"><br>
+	  
+	  <input type="text" class="form-control" name="email" data-bind="email" placeholder="Email" required="" autofocus="" />
+	  <input type="password" class="form-control" name="password" data-bind="password" placeholder="Password" required=""/>     		  
+	 
+	  <button class="btn btn-lg btn-primary btn-block"  name="submit" value="Login" type="Submit">Login</button> 
 
-		  <a href="#" class="sign-up">Don't have an account yet? Sign up here</a> 			
-	</form>			
+	  <a href="#signup" class="sign-up">Don't have an account yet? Sign up here</a> 		
+	</form>
 </div>

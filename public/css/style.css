@@ -1,4 +1,10 @@
 /*color palette definition*/
+.hidden {
+  display: none;
+}
+.visible-block {
+  display: block;
+}
 .btn-primary {
   background: #2bde73;
   border: none;
@@ -15,59 +21,6 @@
 .btn-primary:focus,
 .btn-primary:hover {
   background: #1db95c;
-}
-.wrapper {
-  margin-top: 80px;
-  margin-bottom: 20px;
-}
-.form-signin {
-  max-width: 420px;
-  padding: 50px 38px 66px;
-  margin: 0 auto;
-  background-color: #eeeeee;
-  /*border: 1px solid black;*/
-}
-.form-signin-heading {
-  text-align: center;
-  margin-bottom: 30px;
-}
-.form-control {
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-}
-input[type="text"] {
-  margin-bottom: 0px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-input[type="password"] {
-  margin-bottom: 20px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-.colorgraph {
-  height: 7px;
-  border-top: 0;
-  background: #c4e17f;
-  border-radius: 5px;
-  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-}
-a.sign-up {
-  color: #104ca9;
-  margin: 15px 0 0 0;
-  font-size: 16px;
-  text-decoration: none;
-  display: inline-block;
-}
-a.sign-up:active,
-a.sign-up:hover {
-  text-decoration: none;
-  color: #1208c0;
 }
 @media (max-width: 768px) {
   .container .header {
@@ -91,6 +44,9 @@ body {
 a {
   color: #00B7FF;
 }
+.container {
+  /*generic form styles*/
+}
 .container .header {
   width: 100%;
 }
@@ -106,4 +62,63 @@ a {
   font-size: 16px;
   padding-left: 20px;
   color: #1db95c;
+}
+.container .form {
+  max-width: 420px;
+  padding: 50px 38px 66px;
+  margin: 0 auto;
+  background-color: #eeeeee;
+}
+.container .form .form-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.container .form .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+}
+.container .form input[type="text"] {
+  margin-bottom: 0px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.container .form input[type="password"] {
+  margin-bottom: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.container .form.form-signin .colorgraph {
+  height: 7px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+.container .form.form-signin a.sign-up {
+  color: #104ca9;
+  margin: 15px 0 0 0;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-block;
+}
+.container .form.form-signin a.sign-up:active,
+.container .form.form-signin a.sign-up:hover {
+  text-decoration: none;
+  color: #1208c0;
+}
+.container .form.form-signup {
+  max-width: 600px;
+}
+.container .form.form-signup h3 {
+  text-align: left;
+}
+.container .form.form-signup div.location-picker {
+  margin-top: 20px;
+  width: 100%;
+  height: 500px;
 }

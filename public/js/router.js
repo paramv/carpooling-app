@@ -1,14 +1,26 @@
-define(['bb'], function(bb) {
-  var Workspace = Backbone.Router.extend({
+define([
+  'bb',
+  'app/signup/signup'
+], function(bb, Signup) {
+  var signUp;
+  var router;
+  var Router = Backbone.Router.extend({
 
     routes: {
-      "help": "help", // #help
+      "signup": "onSignup", // #help
       "search/:query": "search", // #search/kiwis
       "search/:query/p:page": "search" // #search/kiwis/p7
     },
 
-    help: function() {
-      console.log('hhha')
+    onSignup: function() {
+      if (!signUp) {
+        signUp = new Signup();
+        signUp.$el.appendTo('body .container .content');
+        signUp.$el.addClass('form-signup');
+      }
+      $('body .container .content').children().addClass('hidden');
+      signUp.$el.removeClass('hidden').addClass('visible-block');
+      
     },
 
     search: function(query, page) {
@@ -16,6 +28,12 @@ define(['bb'], function(bb) {
     }
 
   });
-  Workspace();
-  Backbone.history.start();
+  return {
+    getInstance:function(){
+        if(!router){
+            router = new Router();
+        }
+        return router;
+    }
+  }
 });

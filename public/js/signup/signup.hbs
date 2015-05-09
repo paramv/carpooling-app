@@ -1,0 +1,56 @@
+<div>
+	<form action="" method="post" name="Signup_Form">
+		<div class="status errors">
+			
+		</div>
+		<h3 class="form-heading">Allo, enter your details to get started</h3>
+		<div class="form-group">
+	    <label>Name</label>
+	    <input type="text" class="form-control" placeholder="Enter name" name="name" data-bind="name" required=""/>
+	  </div>
+	  <div class="form-group">
+	    <label>Email address</label>
+	    <input type="email" class="form-control" placeholder="Enter email" name="email" data-bind="email" required=""/>
+	  </div>
+	  <div class="form-group">
+	    <label>Password</label>
+	    <input type="password" class="form-control" placeholder="Enter a password" name="password" data-bind="password" required="">
+	    <label>Re-enter Password</label>
+	    <input type="password" class="form-control" placeholder="Re-enter the password" name="password_alt" data-bind="password_alt" required="">
+	  </div>
+	  <div class="form-group">
+	    <label>Phone Number</label>
+	    <input type="text" class="form-control" placeholder="Enter your phone number" name="mobilenumber" data-bind="mobilenumber" required="">
+	  </div>
+	  <div class="form-group">
+	    <label>Work Location</label>
+	    <select name="" class="form-control" name="worklocation" data-bind="worklocation" required="">
+	    	<option value="test">Test</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <label>Home Address</label>
+	    <input type="text" name="address" data-bind="address" class="form-control" placeholder="A starting point for your daily trip" required="" />
+	    <div class="location-picker home-address"></div>
+	  </div>
+	  <label>Do you own a vehicle?</label>
+	  <div class="radio form-group">
+	    <label>
+	      <input type="radio" name="mobilenumber" data-bind="vehicle" value="yes"/> Yes
+	    </label>
+	    <label>
+	      <input type="radio" name="mobilenumber" data-bind="vehicle" value="no"/> No
+	    </label>
+	  </div>
+	  <div class="form-group">
+	    <label>Start Time</label>
+	    <input type="time" class="form-control" placeholder="When do you start for work?" name="starttime" data-bind="starttime" />
+	  </div>
+	  <div class="form-group">
+	    <label>End Time</label>
+	    <input type="time" class="form-control" placeholder="When do you return from work?" name="endtime" data-bind="endtime" />
+	  </div>
+	  
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+</div>
