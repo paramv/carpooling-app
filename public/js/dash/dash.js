@@ -39,9 +39,9 @@ define([
 			});
 			this.mapView.user = user;
 			this._bindEvents();
-			// this.mapView.initMaps().done(function() {
-			// 	self.search();
-			// });
+			this.mapView.initMaps().done(function() {
+				self.search();
+			});
 		},
 
 		_bindEvents: function() {

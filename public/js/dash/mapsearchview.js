@@ -30,6 +30,7 @@ define([
 					lng: user.address[1]
 				};
 				this.maps = new google.maps.Map(this.el, this.mapOpts);
+				this.markers = [];
 				/*this.destinationMarker = new google.maps.Marker({
 					position: new google.maps.LatLng(destination.lat, destination.lng),
 					map: this.maps,
@@ -86,7 +87,7 @@ define([
 
 		plotUsers: function(users) {
 			var self = this;
-			this.markers = [];
+			this.clearUsers();
 			$.each(users, function(idx,user) {
 				if(user._id === self.user._id) return true;
 				var marker = new google.maps.Marker({
@@ -96,6 +97,13 @@ define([
 				});
 				self.markers.push(marker);
 			});
+		},
+
+		clearUsers:function(){
+			this.markers.forEach(function(marker){
+				marker.setMap(null);
+			});
+			this.markers.length = 0;
 		}
 	});
 

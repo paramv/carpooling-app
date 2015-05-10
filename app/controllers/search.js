@@ -18,13 +18,14 @@ router.post('/', function(req, res, next) {
         if (err) {
             return next(err);
         }
-        if (body.isPassenger) {
+        if (!user.vehicle) {
+            console.log(user.address,body.radius/6371)
             query = User.find({
                 'worklocation.name': user.worklocation.name,
                 vehicle: true,
                 address: {
                     $near: user.address,
-                    $maxDistance: parseInt(body.radius)
+                    $maxDistance: body.radius/6371
                 }
             });
             if (body.startTime) {
@@ -44,27 +45,27 @@ router.post('/', function(req, res, next) {
                 });
         } else {
             if (body.searchType === 'near') {
+                console.log('near');
                 query = User.find({
                     'worklocation.name': user.worklocation.name,
-                    vehicle: false,
                     address: {
                         $near: user.address,
-                        $maxDistance: parseInt(body.radius)
+                        $maxDistance: body.radius/6371
                     }
                 });
             } else {
+                console.log(user.worklocation.name);
                 query = User.find({
                     'worklocation.name': user.worklocation.name,
-                    vehicle: false,
-                    address: {
-                        $within: {
-                            $box: [
-                                [body.bounds.sw[0], body.bounds.sw[0]],
-                                [body.bounds.ne[0], body.bounds.ne[0]]
-                            ],
-                            $maxDistance: parseInt(body.radius)
-                        }
-                    }
+                    // address: {
+                    //     $within: {
+                    //         $box: [
+                    //             [body.bounds.sw[0], body.bounds.sw[0]],
+                    //             [body.bounds.ne[0], body.bounds.ne[0]]
+                    //         ],
+                    //         $maxDistance: 500
+                    //     }
+                    // }
                 });
             }
             if (body.startTime) {
@@ -73,7 +74,8 @@ router.post('/', function(req, res, next) {
             if (body.endTime) {
                 query.where('workTimings.end').equals(user.workTimings.end);
             }
-            query.select('_id name org email workTimings address vehicle')
+            query
+                .select('_id name org email workTimings address vehicle')
                 .limit(10)
                 .exec(function(err, users) {
                     if (err) {
