@@ -1,8 +1,8 @@
 <div class="no-users">Sorry, we could not find any users matching your query.</div>
 {{#each users}}
 {{#ifUsersAreDifferent}}
-	<div class="user result">
-		<p class="name"><span class="label">Name:</span>{{name}}</p>
+	<div class="user result" data-id={{_id}}>
+		<p class="name"><span class="label">Name:</span>{{name}} <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></p>
 		<p class="email"><span class="label">Email:</span>{{email}}</p>
 		<p class="org"><span class="label">Works at:</span>{{org}}</p>
 		<p class="working-hours">

@@ -82,14 +82,14 @@ define([
 			// 	marker.setPosition(event.latLng);
 			// });
 
-			
+
 		},
 
 		plotUsers: function(users) {
 			var self = this;
 			this.clearUsers();
-			$.each(users, function(idx,user) {
-				if(user._id === self.user._id) return true;
+			$.each(users, function(idx, user) {
+				if (user._id === self.user._id) return true;
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(user.address[1], user.address[0]),
 					map: self.maps,
@@ -99,11 +99,23 @@ define([
 			});
 		},
 
-		clearUsers:function(){
-			this.markers.forEach(function(marker){
+		clearUsers: function() {
+			this.markers.forEach(function(marker) {
 				marker.setMap(null);
 			});
 			this.markers.length = 0;
+		},
+
+		focusOnOrigin: function() {
+			this.maps.setCenter(
+				new google.maps.LatLng(this.user.address[1], this.user.address[0])
+			);
+		},
+
+		focusOnPosition: function(lat,lng) {
+			this.maps.setCenter(
+				new google.maps.LatLng(lat,lng)
+			);
 		}
 	});
 

@@ -86,10 +86,21 @@ define([
 			// 'afterrender'
 			'click .search-type-btn .btn': 'onButtonClick',
 			'click .search-btn ': 'search',
-			'click .logout': 'logout'
+			'click .logout': 'logout',
+			'click span.glyphicon': 'focusOnPosition'
 
 		},
 
+
+		focusOnPosition:function(e){
+			var $el = $(e.currentTarget);
+			var $parent = $el.parents('.user');
+			var id = $parent.attr('data-id');
+			var userRef = $.grep(this.results,function(user){
+				return user._id === id;
+			})[0];
+			this.mapView.focusOnPosition(userRef.address[1],userRef.address[0]);
+		},
 
 		onButtonClick: function(e) {
 			var $el = $(e.currentTarget);
@@ -125,7 +136,7 @@ define([
 				data: filter
 			}).done(function(resp) {
 				self.mapView.plotUsers(resp);
-
+				self.results = resp;
 				self.$el.find('.results-wrapper').html(resultsTpl({
 					users: resp || [],
 					user: user
@@ -134,6 +145,10 @@ define([
 					self.$el.find('.no-users').hide();
 				} else {
 					self.$el.find('.no-users').show();
+				}
+
+				if(filterModel.get('searchType') === 'near'){
+					self.mapView.focusOnOrigin();
 				}
 
 
