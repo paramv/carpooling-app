@@ -105,15 +105,16 @@ define([
 				data: filter
 			}).done(function(resp) {
 				self.mapView.plotUsers(resp);
-				if(!resp || !resp.length){
-					$('.no-users').show();
-				}else{
-					$('.no-users').hide();
-				}
+				
 				self.$el.find('.results-wrapper').html(resultsTpl({
 					users: resp || [],
 					user: user
 				}));
+				if(resp && resp.length){
+					self.$el.find('.no-users').hide();
+				}else{
+					self.$el.find('.no-users').show();
+				}
 
 
 			});

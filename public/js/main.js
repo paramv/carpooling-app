@@ -69,7 +69,9 @@ require([
         }
         bb.history.start();
         if (bb.history.getFragment() !== 'signup') {
-            bb.history.navigate('login');
+            bb.history.navigate('login',{
+                trigger:true
+            });
         }
 
     }).fail(function() {

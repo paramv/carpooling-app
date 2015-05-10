@@ -18,7 +18,7 @@ router.post('/', function(req, res, next) {
         if (err) {
             return next(err);
         }
-        if (!user.vehicle) {
+        if (body.isPassenger === "true") {
             console.log(user.address, body.radius / 6371)
             query = User.find({
                 'worklocation.name': user.worklocation.name,
@@ -72,7 +72,6 @@ router.post('/', function(req, res, next) {
                 });
             }
             if (body.startTime === 'true') {
-                console.log(body.startTime);
                 query.where('workTimings.start').equals(user.workTimings.start);
             }
             if (body.endTime === 'true') {
