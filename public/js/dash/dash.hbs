@@ -3,6 +3,11 @@
 		HI there, <span>{{name}}!</span>
 		<button class="btn btn-primary logout">Logout</button>
 	</h3>
+
+	<div class="btn-group search-type-btn" role="group">
+	  <button type="button" class="btn btn-default rides {{#if isPassenger}}active{{/if}}">Search for rides</button>
+	  <button type="button" class="btn btn-default passengers {{#unless isPassenger}}active{{/unless}}">Search for passengers</button>
+	</div>
 	<div class="map-canvas-wrapper"></div>
 	<div class="search">
 		<div class="row">

@@ -17,7 +17,7 @@ define([
 				'startTime': true,
 				'endTime': true,
 				'radius': 2,
-				'searchType':'near'
+				'searchType': 'near'
 			});
 			// this.listenTo(this.filterModel, "change", this.filter);
 			this.render();
@@ -26,14 +26,24 @@ define([
 			var $markup;
 			var user = State.getInstance().get('user');
 			var self = this;
+			var state = State.getInstance();
 			$markup = $(this._template(user)).html();
 
+			// set the state before doing anything else
+			state.set('isPassenger', !user.vehicle);
 			this.$el.html($markup);
 			this.$el.find('.filters-wrapper').html(filterTpl({
-				isPassenger: !user.vehicle,
+				isPassenger: State.getInstance().get('isPassenger'),
 				user: user
 			}));
 			this.$el.addClass('dash-view');
+			
+			$('.search-type-btn').children().removeClass('active');
+			if (user.vehicle) {
+				$('.passengers').addClass('active');
+			} else {
+				$('.rides').addClass('active');
+			}
 			this.mapView = new MapSearchView({
 				el: this.$el.find('.map-canvas-wrapper').get(0)
 			});
@@ -60,11 +70,11 @@ define([
 							filterModel.set($thisEl.attr('data-bind'), $thisEl.val());
 						}
 
-						if($thisEl.attr('name') === 'searchType'){
-							if($thisEl.val() === 'near'){
+						if ($thisEl.attr('name') === 'searchType') {
+							if ($thisEl.val() === 'near') {
 								self.$el.find('[name=radius]').removeAttr('disabled');
-							}else{
-								self.$el.find('[name=radius]').attr('disabled',true);
+							} else {
+								self.$el.find('[name=radius]').attr('disabled', true);
 							}
 						}
 					});
@@ -74,9 +84,19 @@ define([
 
 		events: {
 			// 'afterrender'
+			'click .search-type-btn .btn': 'onButtonClick',
 			'click .search-btn ': 'search',
 			'click .logout': 'logout'
 
+		},
+
+
+		onButtonClick: function(e) {
+			var $el = $(e.currentTarget);
+			State.getInstance().set('isPassenger', $el.hasClass('rides'));
+			$('.search-type-btn').children().removeClass('active');
+			$el.addClass('active');
+			this.search();
 		},
 
 		search: function() {
@@ -88,7 +108,7 @@ define([
 			var self = this;
 
 
-			filterModel.set('isPassenger', !user.vehicle);
+			filterModel.set('isPassenger', State.getInstance().get('isPassenger'));
 			filterModel.set('userId', user._id);
 
 			filterModel.set('bounds', {
@@ -105,14 +125,14 @@ define([
 				data: filter
 			}).done(function(resp) {
 				self.mapView.plotUsers(resp);
-				
+
 				self.$el.find('.results-wrapper').html(resultsTpl({
 					users: resp || [],
 					user: user
 				}));
-				if(resp && resp.length){
+				if (resp && resp.length) {
 					self.$el.find('.no-users').hide();
-				}else{
+				} else {
 					self.$el.find('.no-users').show();
 				}
 
