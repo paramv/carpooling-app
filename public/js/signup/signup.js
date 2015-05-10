@@ -71,14 +71,14 @@ define([
 			this.model.set('workTimings', workTimings);
 			var addr = this.model.get('address');
 			if (typeof addr === 'string') {
-				this.model.set('address', addr.split(','));
+				this.model.set('address', addr.split(',').reverse());
 			}
 			var worklocation = this.$el.find('select[name=worklocation]').val();
 			var workLocationName = worklocation.split(':')[0];
 			var workLocationLatLng = worklocation.split(':')[1];
 			this.model.set('worklocation', {
 				name: workLocationName,
-				address: workLocationLatLng.split(',')
+				address: workLocationLatLng.split(',').reverse()
 			});
 			this.model.set('vehicle',$('[name=vehicle]:checked').val() === 'yes' ? true : false);
 			// this.$el.find('.pick-location').text('Pick Location');

@@ -19,13 +19,14 @@ router.post('/', function(req, res, next) {
             return next(err);
         }
         if (!user.vehicle) {
-            console.log(user.address,body.radius/6371)
+            console.log(user.address, body.radius / 6371)
             query = User.find({
                 'worklocation.name': user.worklocation.name,
                 vehicle: true,
                 address: {
-                    $near: user.address,
-                    $maxDistance: body.radius/6371
+                    $geoWithin: {
+                        $centerSphere: [user.address, body.radius / 6371]
+                    }
                 }
             });
             if (body.startTime) {
@@ -45,33 +46,36 @@ router.post('/', function(req, res, next) {
                 });
         } else {
             if (body.searchType === 'near') {
-                console.log('near');
                 query = User.find({
                     'worklocation.name': user.worklocation.name,
+
                     address: {
-                        $near: user.address,
-                        $maxDistance: body.radius/6371
+                        $geoWithin: {
+                            $centerSphere: [user.address, body.radius / 6371]
+                        }
+                        // $near: user.address,
+                        // $maxDistance: body.radius/6371
                     }
                 });
             } else {
-                console.log(user.worklocation.name);
                 query = User.find({
                     'worklocation.name': user.worklocation.name,
-                    // address: {
-                    //     $within: {
-                    //         $box: [
-                    //             [body.bounds.sw[0], body.bounds.sw[0]],
-                    //             [body.bounds.ne[0], body.bounds.ne[0]]
-                    //         ],
-                    //         $maxDistance: 500
-                    //     }
-                    // }
+                    address: {
+                        $within: {
+                            $box: [
+                                [body.bounds.sw[0], body.bounds.sw[1]],
+                                [body.bounds.ne[0], body.bounds.ne[1]]
+                            ],
+                            $maxDistance: 500/6371
+                        }
+                    }
                 });
             }
-            if (body.startTime) {
+            if (body.startTime === 'true') {
+                console.log(body.startTime);
                 query.where('workTimings.start').equals(user.workTimings.start);
             }
-            if (body.endTime) {
+            if (body.endTime === 'true') {
                 query.where('workTimings.end').equals(user.workTimings.end);
             }
             query

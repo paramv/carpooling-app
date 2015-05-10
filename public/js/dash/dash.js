@@ -16,7 +16,7 @@ define([
 			this.filterModel = new bb.Model({
 				'startTime': true,
 				'endTime': true,
-				'radius': 10,
+				'radius': 2,
 				'searchType':'near'
 			});
 			// this.listenTo(this.filterModel, "change", this.filter);
@@ -53,7 +53,7 @@ define([
 					$this.on('change', function() {
 						var $thisEl = $(this);
 						if ($thisEl.is('input[type=checkbox]')) {
-							filterModel.set($thisEl.attr('data-bind'), ($thisEl.is(':selected') === 'on' ? true : false));
+							filterModel.set($thisEl.attr('data-bind'), $thisEl.is(':checked'));
 						} else if ($thisEl.attr('name') === 'radius') {
 							filterModel.set($thisEl.attr('data-bind'), parseInt($thisEl.val()));
 						} else {
@@ -92,10 +92,10 @@ define([
 			filterModel.set('userId', user._id);
 
 			filterModel.set('bounds', {
-				'sw': [bounds.getSouthWest().A, bounds.getSouthWest().F],
-				'ne': [bounds.getNorthEast().A, bounds.getNorthEast().F]
+				'sw': [bounds.getSouthWest().F, bounds.getSouthWest().A],
+				'ne': [bounds.getNorthEast().F, bounds.getNorthEast().A]
 			});
-			filterModel.set('startPoint', [legs.start_location.A, legs.start_location.F]);
+			filterModel.set('startPoint', [legs.start_location.F, legs.start_location.A]);
 			var filter = this.filterModel.toJSON();
 			// t = this.mapView.directionResult;
 			$.ajax({

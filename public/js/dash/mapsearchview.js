@@ -22,12 +22,12 @@ define([
 			this.rendered = $.Deferred();
 			if (force || !this._mapInitialized) {
 				destination = {
-					lat: user.worklocation.address[0],
-					lng: user.worklocation.address[1]
+					lat: user.worklocation.address[1],
+					lng: user.worklocation.address[0]
 				};
 				origin = {
-					lat: user.address[0],
-					lng: user.address[1]
+					lat: user.address[1],
+					lng: user.address[0]
 				};
 				this.maps = new google.maps.Map(this.el, this.mapOpts);
 				this.markers = [];
@@ -91,7 +91,7 @@ define([
 			$.each(users, function(idx,user) {
 				if(user._id === self.user._id) return true;
 				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(user.address[0], user.address[1]),
+					position: new google.maps.LatLng(user.address[1], user.address[0]),
 					map: self.maps,
 					title: user.name
 				});
