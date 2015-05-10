@@ -80,7 +80,7 @@ define([
 				name: workLocationName,
 				address: workLocationLatLng.split(',')
 			});
-			this.model.set('vehicle',$('[name=vehicle]').val() === 'yes' ? true : false);
+			this.model.set('vehicle',$('[name=vehicle]:checked').val() === 'yes' ? true : false);
 			// this.$el.find('.pick-location').text('Pick Location');
 			// this.$el.find('.location-picker').removeClass('open').height(0);
 			this.clearErrors();

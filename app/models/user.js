@@ -25,6 +25,7 @@ var UserSchema = new Schema({
 	name: String,
 	email: String,
 	password: String,
+	org: String,
 	address: {
 		type: [Number], // [<longitude>, <latitude>]
 		index: '2d' // create the geospatial index

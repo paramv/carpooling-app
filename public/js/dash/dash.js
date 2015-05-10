@@ -17,6 +17,7 @@ define([
 				'startTime': true,
 				'endTime': true,
 				'radius': 10,
+				'searchType':'near'
 			});
 			// this.listenTo(this.filterModel, "change", this.filter);
 			this.render();
@@ -28,16 +29,19 @@ define([
 			$markup = $(this._template(user)).html();
 
 			this.$el.html($markup);
-			this.$el.find('.filters-wrapper').html(filterTpl());
+			this.$el.find('.filters-wrapper').html(filterTpl({
+				isPassenger: !user.vehicle,
+				user: user
+			}));
 			this.$el.addClass('dash-view');
 			this.mapView = new MapSearchView({
 				el: this.$el.find('.map-canvas-wrapper').get(0)
 			});
 			this.mapView.user = user;
 			this._bindEvents();
-			this.mapView.initMaps().done(function() {
-				self.search();
-			});
+			// this.mapView.initMaps().done(function() {
+			// 	self.search();
+			// });
 		},
 
 		_bindEvents: function() {
@@ -50,8 +54,18 @@ define([
 						var $thisEl = $(this);
 						if ($thisEl.is('input[type=checkbox]')) {
 							filterModel.set($thisEl.attr('data-bind'), ($thisEl.is(':selected') === 'on' ? true : false));
-						} else {
+						} else if ($thisEl.attr('name') === 'radius') {
 							filterModel.set($thisEl.attr('data-bind'), parseInt($thisEl.val()));
+						} else {
+							filterModel.set($thisEl.attr('data-bind'), $thisEl.val());
+						}
+
+						if($thisEl.attr('name') === 'searchType'){
+							if($thisEl.val() === 'near'){
+								self.$el.find('[name=radius]').removeAttr('disabled');
+							}else{
+								self.$el.find('[name=radius]').attr('disabled',true);
+							}
 						}
 					});
 				}
@@ -89,9 +103,12 @@ define([
 				dataType: "json",
 				url: '/search',
 				data: filter
-			}).done(function(resp){
+			}).done(function(resp) {
 				self.mapView.plotUsers(resp);
-				self.$el.find('.results-wrapper').html(resultsTpl({users:resp,user:user}));
+				self.$el.find('.results-wrapper').html(resultsTpl({
+					users: resp,
+					user: user
+				}));
 			});
 		},
 

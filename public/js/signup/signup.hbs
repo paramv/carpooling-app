@@ -3,7 +3,7 @@
 		<div class="status errors">
 			
 		</div>
-		<h3 class="form-heading">Allo, enter your details to get started</h3>
+		<h3 class="form-heading">Allo! enter your details to get started.</h3>
 		<div class="form-group">
 	    <label>Name</label>
 	    <input type="text" class="form-control" placeholder="Enter name" name="name" data-bind="name" required=""/>
@@ -23,6 +23,10 @@
 	    <input type="text" class="form-control" placeholder="Enter your phone number" name="mobilenumber" data-bind="mobilenumber" required="">
 	  </div>
 	  <div class="form-group">
+	    <label>Organization</label>
+	    <input type="text" class="form-control" placeholder="Name of your organization" name="org" data-bind="org" required="">
+	  </div>
+	  <div class="form-group">
 	    <label>Work Location</label>
 	    <select name="worklocation" class="form-control" name="worklocation" data-bind="worklocation" required="">
 	    	{{#each locations}}
@@ -32,7 +36,7 @@
 	    </select>
 	  </div>
 	  <div class="form-group">
-	    <label>Home Address</label>
+	    <label>Origin</label>
 	    <input type="text" name="address" data-bind="address" class="form-control" placeholder="A starting point for your daily trip" required="" />
 	    <div class="location-picker home-address"></div>
 	  </div>

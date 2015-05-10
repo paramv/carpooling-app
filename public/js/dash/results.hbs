@@ -3,7 +3,12 @@
 	<div class="user result">
 		<p class="name"><span class="label">Name:</span>{{name}}</p>
 		<p class="email"><span class="label">Email:</span>{{email}}</p>
-		<p class="email"><span class="label">Email:</span>{{email}}</p>
+		<p class="org"><span class="label">Works at:</span>{{org}}</p>
+		<p class="working-hours">
+			<span class="label">Working Hours</span>
+			From {{workTimings.start}} to {{workTimings.end}}
+		</p>
+		<button class="ask-to-join btn btn-primary">Ask to Join</button>
 	</div>
 {{/ifUsersAreDifferent}}
 {{/each}}

@@ -13,20 +13,29 @@ router.post('/', function(req, res, next) {
     // ridiculous
     var body = req.body;
     var userId = body.userId;
+    var query;
     User.findById(userId, function(err, user) {
         if (err) {
             return next(err);
         }
         if (body.isPassenger) {
-            User.find({
-                    'worklocation.name': user.worklocation.name,
-                    vehicle: true,
-                    address: {
-                        $near: user.address,
-                        $maxDistance: parseInt(body.radius)
-                    }
-                })
-                .select('name email workTimings address vehicle')
+            query = User.find({
+                'worklocation.name': user.worklocation.name,
+                vehicle: true,
+                address: {
+                    $near: user.address,
+                    $maxDistance: parseInt(body.radius)
+                }
+            });
+            if (body.startTime) {
+                query.where('workTimings.start').equals(user.workTimings.start);
+            }
+            if (body.endTime) {
+                query.where('workTimings.end').equals(user.workTimings.end);
+            }
+            query.where('_id').ne(user._id)
+                .select('_id name org email workTimings address vehicle')
+                .limit(10)
                 .exec(function(err, users) {
                     if (err) {
                         return next(err);
@@ -34,20 +43,38 @@ router.post('/', function(req, res, next) {
                     res.json(users);
                 });
         } else {
-            User.find({
+            if (body.searchType === 'near') {
+                query = User.find({
                     'worklocation.name': user.worklocation.name,
-                    vehicle: true,
+                    vehicle: false,
+                    address: {
+                        $near: user.address,
+                        $maxDistance: parseInt(body.radius)
+                    }
+                });
+            } else {
+                query = User.find({
+                    'worklocation.name': user.worklocation.name,
+                    vehicle: false,
                     address: {
                         $within: {
                             $box: [
-                                [user.bounds.sw[0], user.bounds.sw[0]],
-                                [user.bounds.ne[0], user.bounds.ne[0]]
+                                [body.bounds.sw[0], body.bounds.sw[0]],
+                                [body.bounds.ne[0], body.bounds.ne[0]]
                             ],
                             $maxDistance: parseInt(body.radius)
                         }
                     }
-                })
-                .select('_id name email workTimings')
+                });
+            }
+            if (body.startTime) {
+                query.where('workTimings.start').equals(user.workTimings.start);
+            }
+            if (body.endTime) {
+                query.where('workTimings.end').equals(user.workTimings.end);
+            }
+            query.select('_id name org email workTimings address vehicle')
+                .limit(10)
                 .exec(function(err, users) {
                     if (err) {
                         return next(err);

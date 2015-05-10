@@ -89,8 +89,13 @@ a {
 			h3 {
 				text-align: left;
 			}
+			input[name=address] {
+				height:5px;
+				opacity: 0;
+				padding: 0;
+			}
 			div.location-picker {
-				margin-top:20px;
+				margin-top:10px;
 				width: 100%;
 				height: 500px;
 				.mapsearch {  
@@ -124,12 +129,26 @@ a {
 			}
 			.results {
 				div.user.result {
-					height:100px;
+					height:110px;
 					border-radius: 10px;
 					padding:10px;
 					box-sizing:content-box;
 					border: 1px solid #B0B0B0;
+					position:relative;
+					overflow: hidden;
+					margin-bottom: 10px;
+					span.label {
+						font-size: 14px;
+					    color: black;
+					    padding-right: 10px;
+					}
+					.ask-to-join {
+						position: absolute;
+						right: 60px;
+						bottom:15px;
+					}
 				}
+
 			}
 		}
 	}

@@ -4,9 +4,25 @@
 <div class="checkbox">
 	<label><input type="checkbox" name="endTime" data-bind="endTime" checked/>End Time</label>
 </div>
+{{#if isPassenger}}
 <div class="form-group">
     <label>Radius (in kms)</label>
     <br/>
 	<input type="number" max="30" min="0" name="radius" data-bind="radius" value="10"/>
 </div>
+{{/if}}
+
+{{#unless isPassenger}}
+<div class="form-group">
+	<div class="radio">
+		<label><input type="radio" name="searchType" data-bind="searchType" checked value="near" />Around my location</label>
+		<label><input type="radio" name="searchType" data-bind="searchType" value="box"/>Between my location and office</label>
+	</div>
+</div>
+<div class="form-group radius">
+	<label>Radius (in kms)</label>
+    <br/>
+	<input type="number" max="30" min="0" name="radius" data-bind="radius" value="10"/>
+</div>
+{{/unless}}
 
