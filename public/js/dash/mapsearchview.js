@@ -31,6 +31,11 @@ define([
 				};
 				this.maps = new google.maps.Map(this.el, this.mapOpts);
 				this.markers = [];
+				this.marker = new google.maps.Marker({
+					position: new google.maps.LatLng(0,0),
+					map: this.maps,
+					title: 'Custom Position'
+				});
 				/*this.destinationMarker = new google.maps.Marker({
 					position: new google.maps.LatLng(destination.lat, destination.lng),
 					map: this.maps,
@@ -79,15 +84,22 @@ define([
 			var marker = this.marker;
 			var self = this;
 			// google.maps.event.addListener(maps, 'click', function(event) {
+			// 	marker.setMap(maps);
 			// 	marker.setPosition(event.latLng);
 			// });
+			// google.maps.event.addListener(marker, 'click', function(event) {
+			// 	marker.setMap(null);
+			// });
+		},
 
-
+		clearMarker:function(){
+			this.marker.setMap(null);
 		},
 
 		plotUsers: function(users) {
 			var self = this;
 			this.clearUsers();
+			this.clearMarker();
 			$.each(users, function(idx, user) {
 				if (user._id === self.user._id) return true;
 				var marker = new google.maps.Marker({
@@ -112,11 +124,35 @@ define([
 			);
 		},
 
-		focusOnPosition: function(lat,lng) {
+		focusOnPosition: function(lat, lng) {
 			this.maps.setCenter(
-				new google.maps.LatLng(lat,lng)
+				new google.maps.LatLng(lat, lng)
 			);
+		},
+
+		drawRadius: function(lat, lng, radius) {
+			var options = {
+				strokeColor: "#D74545",
+				strokeOpacity: 0.35,
+				strokeWeight: 1,
+				fillColor: "#D74545",
+				fillOpacity: 0.25,
+				map: this.maps,
+				center: new google.maps.LatLng(lat, lng),
+				radius: radius * 1000
+			};
+			this.clearRadius();
+			this.circle = new google.maps.Circle(options);
+		},
+
+		clearRadius: function() {
+			if (this.circle) {
+				this.circle.setMap(null);
+				this.circle = null;
+			}
 		}
+
+
 	});
 
 	return MapView;

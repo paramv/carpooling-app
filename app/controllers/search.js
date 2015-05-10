@@ -77,7 +77,8 @@ router.post('/', function(req, res, next) {
             if (body.endTime === 'true') {
                 query.where('workTimings.end').equals(user.workTimings.end);
             }
-            query
+            query.where('_id').ne(user._id)
+                .where('vehicle').equals(false)
                 .select('_id name org email workTimings address vehicle')
                 .limit(10)
                 .exec(function(err, users) {

@@ -27,23 +27,27 @@ define([
 			var user = State.getInstance().get('user');
 			var self = this;
 			var state = State.getInstance();
-			$markup = $(this._template(user)).html();
+			state.set('isPassenger', !user.vehicle);
+			$markup = $(this._template({
+				user: user,
+				isPassenger: State.getInstance().get('isPassenger')
+			})).html();
 
 			// set the state before doing anything else
-			state.set('isPassenger', !user.vehicle);
+			
 			this.$el.html($markup);
 			this.$el.find('.filters-wrapper').html(filterTpl({
 				isPassenger: State.getInstance().get('isPassenger'),
 				user: user
 			}));
 			this.$el.addClass('dash-view');
-			
-			$('.search-type-btn').children().removeClass('active');
-			if (user.vehicle) {
-				$('.passengers').addClass('active');
-			} else {
-				$('.rides').addClass('active');
-			}
+
+			// $('.search-type-btn').children().removeClass('active');
+			// if (State.getInstance().get('isPassenger')) {
+			// 	$('.rides').addClass('active');
+			// } else {
+			// 	$('.passengers').addClass('active');
+			// }
 			this.mapView = new MapSearchView({
 				el: this.$el.find('.map-canvas-wrapper').get(0)
 			});
@@ -92,14 +96,14 @@ define([
 		},
 
 
-		focusOnPosition:function(e){
+		focusOnPosition: function(e) {
 			var $el = $(e.currentTarget);
 			var $parent = $el.parents('.user');
 			var id = $parent.attr('data-id');
-			var userRef = $.grep(this.results,function(user){
+			var userRef = $.grep(this.results, function(user) {
 				return user._id === id;
 			})[0];
-			this.mapView.focusOnPosition(userRef.address[1],userRef.address[0]);
+			this.mapView.focusOnPosition(userRef.address[1], userRef.address[0]);
 		},
 
 		onButtonClick: function(e) {
@@ -143,11 +147,17 @@ define([
 				}));
 				if (resp && resp.length) {
 					self.$el.find('.no-users').hide();
+					if (State.getInstance().get('isPassenger') || filterModel.get('searchType') === 'near') {
+						self.mapView.drawRadius(user.address[1], user.address[0], filterModel.get('radius'));
+					} else {
+						self.mapView.clearRadius();
+					}
 				} else {
 					self.$el.find('.no-users').show();
+					self.mapView.clearRadius();
 				}
 
-				if(filterModel.get('searchType') === 'near'){
+				if (filterModel.get('searchType') === 'near') {
 					self.mapView.focusOnOrigin();
 				}
 

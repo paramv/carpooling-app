@@ -175,6 +175,7 @@ a {
   position: relative;
   overflow: hidden;
   margin-bottom: 10px;
+  width: 96%;
 }
 .container div.dash-view .search .results div.user.result span.label {
   font-size: 14px;
