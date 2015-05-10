@@ -59,31 +59,6 @@ a {
 	    border-top-right-radius: 0;
 	  }
 
-	  &.form-signin {
-			.colorgraph {
-			  height: 7px;
-			  border-top: 0;
-			  background: #c4e17f;
-			  border-radius: 5px;
-			  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-			  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-			  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-			  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-			}
-
-			a.sign-up {
-			  color:@blue;
-			  margin:15px 0 0 0;
-			  font-size: 16px;
-			  text-decoration: none;
-			  display: inline-block;
-			  &:active,&:hover {
-			    text-decoration: none;
-			    color:@dark-blue;
-			  }
-			}
-		}
-
 		&.form-signup {
 			max-width: 600px;
 			h3 {
@@ -112,10 +87,42 @@ a {
 			}
 		}
 	}
+	.form-signin {
+			.colorgraph {
+			  height: 7px;
+			  border-top: 0;
+			  background: #c4e17f;
+			  border-radius: 5px;
+			  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+			  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+			  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+			  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+			}
+
+			a.sign-up {
+			  color:@blue;
+			  margin:15px 0 0 0;
+			  font-size: 16px;
+			  text-decoration: none;
+			  display: inline-block;
+			  &:active,&:hover {
+			    text-decoration: none;
+			    color:@dark-blue;
+			  }
+			}
+		}
 	
 	div.dash-view {
-		.logout {
-			float: right;
+		
+		h3 {
+			position: relative;
+			.logout {
+				  float: right;
+				  position: absolute;
+				  top: -140px;
+				  right: 0;
+				  font-size: 18px;
+			}
 		}
 		.map-canvas-wrapper {
 			width:100%;
@@ -128,6 +135,9 @@ a {
 				
 			}
 			.results {
+				.no-users {
+					font-size: 18px;
+				}
 				div.user.result {
 					height:110px;
 					border-radius: 10px;
